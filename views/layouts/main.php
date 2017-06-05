@@ -39,7 +39,7 @@ AppAsset::register($this);
             ['label' => 'На главную', 'url' => ['/']],
             ['label' => 'О сайте', 'url' => ['/site/about']],
             //['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
+            /*Yii::$app->user->isGuest ? (
                 ['label' => 'Войти', 'url' => ['/user/login']]
             ) : (
                 //ActiveField::labe
@@ -55,7 +55,13 @@ AppAsset::register($this);
                 )
                 . Html::endForm()
                 . '</li>'
-            )
+            )*/
+            Yii::$app->user->isGuest ?
+                ['label' => 'Войти', 'url' => ['/user/security/login']] :
+                ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
+                    'url' => ['/user/security/logout'],
+                    'linkOptions' => ['data-method' => 'post']],
+            ['label' => 'Регистрация', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest]
         ],
     ]);
     NavBar::end();
