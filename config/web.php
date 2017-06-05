@@ -9,6 +9,13 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru',
     'components' => [
+        'view' => [
+            'theme' => [
+                'pathMap' => [
+                    '@dektrium/user/views' => '@app/views/user',
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => '56FTdysqWxfy8J7udXRBuR_aOb2so9mA',
@@ -66,6 +73,13 @@ $config = [
                         }
                     }
                 ],
+                /*'migrate' => [
+                    'class' => 'yii\console\controllers\MigrateController',
+                    'migrationNamespaces' => [
+                        '@vendor/dektrium/yii2-user/migrations',
+                        'app\migrations',
+                    ],
+                ],*/
             ],
         ],
     ],
