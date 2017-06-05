@@ -56,6 +56,9 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
+            'modelMap' => [
+                'Profile' => 'app\models\Profile',
+            ],
             'controllerMap' => [
                 'profile' => [
                     'class' => \dektrium\user\controllers\ProfileController::className(),

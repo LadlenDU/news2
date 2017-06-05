@@ -56,12 +56,14 @@ AppAsset::register($this);
                 . Html::endForm()
                 . '</li>'
             )*/
+            ['label' => 'Профиль', 'url' => ['/user/settings/profile'], 'visible' => !Yii::$app->user->isGuest],
             Yii::$app->user->isGuest ?
                 ['label' => 'Войти', 'url' => ['/user/security/login']] :
                 ['label' => 'Выйти (' . Yii::$app->user->identity->username . ')',
                     'url' => ['/user/security/logout'],
                     'linkOptions' => ['data-method' => 'post']],
-            ['label' => 'Регистрация', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest]
+            ['label' => 'Регистрация', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
+
         ],
     ]);
     NavBar::end();
