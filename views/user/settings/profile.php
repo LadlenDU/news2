@@ -48,11 +48,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'validateOnBlur' => false,
                 ]); ?>
 
-                <?= $form->field($model, 'location') ?>
+                <?= $form->field($model, 'notify_news_email')->checkBox([], false);  ?>
+                <?= $form->field($model, 'notify_news_browser')->checkBox([], false);  ?>
 
-                <?= $form->field($model, 'notify_news_email') ?>
-
-                <?/*= $form->field($model, 'name') */?><!--
+                <?= $form->field($model, 'name') ?><!--
 
                 <?/*= $form->field($model, 'public_email') */?>
 

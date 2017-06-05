@@ -13,6 +13,15 @@ use dektrium\user\models\Profile as BaseProfile;
  */
 class Profile extends BaseProfile
 {
+    public function rules()
+    {
+        $attr = parent::rules();
+
+        $attr['fieldsSafe'] = [['notify_news_email', 'notify_news_browser'], 'safe'];
+
+        return $attr;
+    }
+
     public function attributeLabels()
     {
         $attr = parent::attributeLabels();
