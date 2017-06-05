@@ -67,7 +67,7 @@ class SiteController extends Controller
      * Login action.
      *
      * @return string
-     */
+     *
     public function actionLogin()
     {
         if (!Yii::$app->user->isGuest) {
@@ -81,25 +81,25 @@ class SiteController extends Controller
         return $this->render('login', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Logout action.
      *
      * @return string
-     */
+     *
     public function actionLogout()
     {
         Yii::$app->user->logout();
 
         return $this->goHome();
-    }
+    }*/
 
     /**
      * Displays contact page.
      *
      * @return string
-     */
+     *
     public function actionContact()
     {
         $model = new ContactForm();
@@ -111,7 +111,7 @@ class SiteController extends Controller
         return $this->render('contact', [
             'model' => $model,
         ]);
-    }
+    }*/
 
     /**
      * Displays about page.
