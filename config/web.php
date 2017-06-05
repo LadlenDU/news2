@@ -49,6 +49,16 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
+            'controllerMap' => [
+                'profile' => [
+                    'class' => \dektrium\user\controllers\ProfileController::className(),
+                    'on ' . \dektrium\user\controllers\ProfileController::EVENT_BEFORE_ACTION => function ($e) {
+                        throw new \yii\web\NotFoundHttpException();
+                        //Yii::$app->response->redirect(array('/user/security/login'))->send();
+                        //Yii::$app->end();
+                    }
+                ],
+            ],
         ],
     ],
 ];
