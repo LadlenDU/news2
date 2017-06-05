@@ -4,7 +4,7 @@ $params = require(__DIR__ . '/params.php');
 
 $config = [
     'id' => 'basic',
-    'name'=> 'Простейший новостной сайт',
+    'name' => 'Простейший новостной сайт',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'language' => 'ru',
@@ -56,6 +56,14 @@ $config = [
                         throw new \yii\web\NotFoundHttpException();
                         //Yii::$app->response->redirect(array('/user/security/login'))->send();
                         //Yii::$app->end();
+                    }
+                ],
+                'settings' => [
+                    'class' => \dektrium\user\controllers\SettingsController::className(),
+                    'on ' . \dektrium\user\controllers\SettingsController::EVENT_BEFORE_ACTION => function ($e) {
+                        if ($e->action->id == 'networks' || $e->action->id == 'disconnect') {
+                            throw new \yii\web\NotFoundHttpException();
+                        }
                     }
                 ],
             ],
