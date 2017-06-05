@@ -36,11 +36,11 @@ AppAsset::register($this);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
-            ['label' => 'На главную', 'url' => ['/site/index']],
+            ['label' => 'На главную', 'url' => ['/']],
             ['label' => 'О сайте', 'url' => ['/site/about']],
             //['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/user/login']]
+                ['label' => 'Войти', 'url' => ['/user/login']]
             ) : (
                 //ActiveField::labe
                 //['label' => 'Contact222', 'url' => ['/site/contact']],
@@ -48,9 +48,9 @@ AppAsset::register($this);
                 //Html::label('Contact222', null, ['url' => ['/site/contact']]) .
             Html::tag('li', Html::a('Профиль', '/user/settings/profile')) .
                 '<li>'
-                . Html::beginForm(['/site/logout'], 'post')
+                . Html::beginForm(['/user/logout'], 'post')
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Выйти (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link logout']
                 )
                 . Html::endForm()
