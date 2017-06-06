@@ -56,8 +56,10 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
+            'admins' => ['Ladlen'],
             'modelMap' => [
-                'Profile' => 'app\models\Profile',
+                'Profile' => 'app\models\user\Profile',
+                'SettingsForm' => 'app\models\user\SettingsForm',
             ],
             'controllerMap' => [
                 'profile' => [
