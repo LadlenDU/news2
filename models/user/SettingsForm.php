@@ -37,16 +37,12 @@ class SettingsForm extends BaseSettingsForm
             }
 
             if ($this->new_password) {
-                /** @var Token $token */
-                /*$token = Yii::createObject([
-                    'class'   => Token::className(),
-                    'user_id' => $this->user->id,
-                    'type'    => Token::TYPE_CONFIRM_OLD_EMAIL,
-                ]);
-                $token->save(false);
-                $this->mailer->sendReconfirmationMessage($this->user, $token);*/
-
-                $this->mailer->sendGeneratedPassword($this->user, $this->new_password);
+                Yii::$app->mailer->compose()
+                    ->setTo($this->user->email)
+                    ->setFrom(Yii::$app->params['fromDistribEmail'])
+                    ->setSubject('Изменение пароля')
+                    ->setTextBody('Вы установили новый пароль: ' . $this->new_password)
+                    ->send();
             }
 
             return $this->user->save();
