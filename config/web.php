@@ -9,6 +9,10 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru',
     'components' => [
+        'authManager' => [
+            'class' => 'yii\rbac\DbManager',
+            //'defaultRoles' => ['reader'],
+        ],
         'view' => [
             'theme' => [
                 'pathMap' => [
