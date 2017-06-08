@@ -60,10 +60,11 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
-            'admins' => ['Ladlen'],
+            //'admins' => ['Ladlen'],
             'modelMap' => [
                 'Profile' => 'app\models\user\Profile',
                 'SettingsForm' => 'app\models\user\SettingsForm',
+                'User' => 'app\models\user\User',
             ],
             'controllerMap' => [
                 'profile' => [
@@ -100,7 +101,7 @@ if (YII_ENV_DEV) {
     $config['modules']['debug'] = [
         'class' => 'yii\debug\Module',
         // uncomment the following to add your IP if you are not connecting from localhost.
-        //'allowedIPs' => ['127.0.0.1', '::1'],
+        'allowedIPs' => ['127.0.0.1', '::1', '192.168.*'],
     ];
 
     $config['bootstrap'][] = 'gii';
