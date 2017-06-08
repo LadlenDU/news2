@@ -17,6 +17,8 @@ class Token extends BaseToken
      */
     public function getUrl()
     {
+        $params = [];
+
         switch ($this->type) {
             case self::TYPE_CONFIRMATION:
                 $route = '/user/registration/confirm';
@@ -30,14 +32,14 @@ class Token extends BaseToken
                 break;
             case self::TYPE_CONFIRM_NEW_ADMIN_EMAIL:
                 $route = '/user/settings/confirm';
+                $params = ['created_by' => 'admin'];
                 break;
             default:
                 throw new \RuntimeException();
         }
 
-        $url = $this->created_by
-            ? Url::to([$route, 'id' => $this->user_id, 'code' => $this->code, 'created_by' => $this->created_by], true)
-            : Url::to([$route, 'id' => $this->user_id, 'code' => $this->code], true);
+        $url = Url::to(array_merge([$route, 'id' => $this->user_id, 'code' => $this->code], $params), true);
+        //$url = Url::to([$route, 'id' => $this->user_id, 'code' => $this->code], true);
 
         return $url;
     }

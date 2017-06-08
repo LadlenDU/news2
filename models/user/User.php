@@ -2,7 +2,7 @@
 
 namespace app\models\user;
 
-//use app\models\user\Token;
+use app\models\user\Token;
 use app\modules\user\Mailer;
 use dektrium\user\models\User as BaseUser;
 
@@ -92,7 +92,7 @@ class User extends BaseUser
                 'created_by' => 'admin',
             ]);
             $token->link('user', $this);*/
-            $token = \Yii::createObject(['class' => Token::className(), 'type' => Token::TYPE_CONFIRMATION]);
+            $token = \Yii::createObject(['class' => Token::className(), 'type' => Token::TYPE_CONFIRM_NEW_ADMIN_EMAIL]);
             $token->link('user', $this);
             (new Mailer)->sendNewEmailByAdmin($this, $token);
 

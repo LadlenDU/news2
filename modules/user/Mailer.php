@@ -54,7 +54,7 @@ class Mailer extends BaseMailer
             $user->email,
             $this->getNewEmailByAdminSubject(),
             'new_email_by_admin',
-            ['user' => $user, 'token' => $token, 'module' => $this->module, 'created_by' => 'admin']
+            ['user' => $user, 'token' => $token, 'module' => $this->module]
         );
     }
 }
