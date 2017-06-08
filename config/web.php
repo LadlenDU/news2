@@ -9,6 +9,19 @@ $config = [
     'bootstrap' => ['log'],
     'language' => 'ru',
     'components' => [
+        'i18n' => [
+            'translations' => [
+                'user_add' => [
+                    'class' => 'yii\i18n\PhpMessageSource',
+                    'basePath' => '@app/messages',
+                    'sourceLanguage' => 'en-US',
+                    /*'fileMap' => [
+                        'app' => 'app.php',
+                        'app/error' => 'error.php',
+                    ],*/
+                ],
+            ],
+        ],
         'authManager' => [
             'class' => 'yii\rbac\DbManager',
             //'defaultRoles' => ['reader'],
