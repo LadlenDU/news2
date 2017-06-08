@@ -78,6 +78,7 @@ $config = [
                 'Profile' => 'app\models\user\Profile',
                 'SettingsForm' => 'app\models\user\SettingsForm',
                 'User' => 'app\models\user\User',
+                'Token' => 'app\models\user\Token',
             ],
             'controllerMap' => [
                 'profile' => [
