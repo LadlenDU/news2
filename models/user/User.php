@@ -10,16 +10,6 @@ class User extends BaseUser
     /**
      * @inheritdoc
      */
-    public function attributeLabels()
-    {
-        $trans = parent::attributeLabels();
-        $trans['last_login_at'] = \Yii::t('user_add', 'Last login');
-        return $trans;
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function getIsAdmin()
     {
         return \Yii::$app->user->can('admin');
