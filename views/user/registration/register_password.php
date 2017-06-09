@@ -19,8 +19,7 @@ use yii\widgets\ActiveForm;
 // * @var dektrium\user\models\RecoveryForm $model
  */
 
-//$this->title = Yii::t('user', 'Set password');
-$this->title = $title;
+$this->title = Yii::t('user', 'Set password');
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
@@ -39,7 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                 <?= $form->field($model, 'password')->passwordInput() ?>
 
-                <?= Html::submitButton(Yii::t('user', 'Finish'), ['class' => 'btn btn-success btn-block']) ?><br>
+                <?= Html::submitButton(Yii::t('user', 'Save'), ['class' => 'btn btn-success btn-block']) ?><br>
 
                 <?php ActiveForm::end(); ?>
             </div>

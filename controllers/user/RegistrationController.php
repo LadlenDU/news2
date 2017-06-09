@@ -47,7 +47,11 @@ class RegistrationController extends BaseRegistrationController
      */
     public function actionConfirm_input_password($id, $code)
     {
-        $token = $this->finder->findToken(['user_id' => $id, 'code' => $code, 'type' => Token::TYPE_RECOVERY])->one();
+        $token = $this->finder->findToken([
+            'user_id' => $id,
+            'code' => $code,
+            'type' => Token::TYPE_CONFIRM_NEW_ADMIN_EMAIL
+        ])->one();
 
         if ($token === null || $token->isExpired || $token->user === null) {
             \Yii::$app->session->setFlash(
@@ -67,10 +71,10 @@ class RegistrationController extends BaseRegistrationController
 
         $this->performAjaxValidation($model);
 
-        if ($model->load(\Yii::$app->getRequest()->post())
-            && $model->setPassword($token)
-            && $token->user->attemptConfirmation($code)
-        ) {
+        if ($model->load(\Yii::$app->getRequest()->post()) && $model->setPassword($token)) {
+
+            $token->user->attemptConfirmation($code);
+
             return $this->render('/message', [
                 'title' => \Yii::t('user', 'Password has been set'),
                 'module' => $this->module,
@@ -113,8 +117,7 @@ class RegistrationController extends BaseRegistrationController
         ]);
     }
 
-    public
-    function validateToken($code, $type)
+    public function validateToken($code, $type)
     {
         $success = false;
 

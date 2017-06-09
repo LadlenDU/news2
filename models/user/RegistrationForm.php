@@ -35,12 +35,12 @@ class RegistrationForm extends BaseRegistrationForm
         }
 
         if ($token->user->resetPassword($this->password)) {
-            \Yii::$app->session->setFlash('success', \Yii::t('user', 'Your password has been set successfully.'));
-            $token->delete();
+            \Yii::$app->session->setFlash('info', \Yii::t('user', 'Your password has been set successfully.'));
+            //$token->delete();
         } else {
             \Yii::$app->session->setFlash(
                 'danger',
-                \Yii::t('user', 'An error occurred and your password has not been set. Please try again later.')
+                \Yii::t('warning', 'An error occurred and your password has not been set. Please try again later.')
             );
         }
 

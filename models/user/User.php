@@ -17,6 +17,13 @@ class User extends BaseUser
         return \Yii::$app->user->can('admin');
     }
 
+    protected function setDefaultRole()
+    {
+        $auth = \Yii::$app->authManager;
+        $authorRole = $auth->getRole('reader');
+        $auth->assign($authorRole, $this->getId());
+    }
+
     /**
      * @inheritdoc
      */
@@ -39,9 +46,11 @@ class User extends BaseUser
                 return false;
             }
 
-            $auth = \Yii::$app->authManager;
+            $this->setDefaultRole();
+
+            /*$auth = \Yii::$app->authManager;
             $authorRole = $auth->getRole('reader');
-            $auth->assign($authorRole, $this->getId());
+            $auth->assign($authorRole, $this->getId());*/
 
             if ($this->module->enableConfirmation) {
                 /** @var Token $token */
@@ -83,7 +92,9 @@ class User extends BaseUser
                 return false;
             }
 
-            $this->confirm();
+            $this->setDefaultRole();
+
+            //$this->confirm();
 
             /** @var Token $token */
             /*$token = \Yii::createObject([
@@ -107,5 +118,30 @@ class User extends BaseUser
             \Yii::warning($e->getMessage());
             throw $e;
         }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attemptConfirmation($code)
+    {
+        $token = $this->finder->findTokenByParams($this->id, $code, Token::TYPE_CONFIRM_NEW_ADMIN_EMAIL);
+
+        if ($token instanceof Token && !$token->isExpired) {
+            $token->delete();
+            if (($success = $this->confirm())) {
+                \Yii::$app->user->login($this, $this->module->rememberFor);
+                $message = \Yii::t('user', 'Thank you, registration is now complete.');
+            } else {
+                $message = \Yii::t('user', 'Something went wrong and your account has not been confirmed.');
+            }
+        } else {
+            $success = false;
+            $message = \Yii::t('user', 'The confirmation link is invalid or expired. Please try requesting a new one.');
+        }
+
+        \Yii::$app->session->setFlash($success ? 'success' : 'danger', $message);
+
+        return $success;
     }
 }
