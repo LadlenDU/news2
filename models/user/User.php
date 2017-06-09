@@ -3,7 +3,7 @@
 namespace app\models\user;
 
 use app\models\user\Token;
-use app\modules\user\Mailer;
+//use app\modules\user\Mailer;
 use dektrium\user\helpers\Password;
 use dektrium\user\models\User as BaseUser;
 
@@ -48,10 +48,6 @@ class User extends BaseUser
 
             $this->setDefaultRole();
 
-            /*$auth = \Yii::$app->authManager;
-            $authorRole = $auth->getRole('reader');
-            $auth->assign($authorRole, $this->getId());*/
-
             if ($this->module->enableConfirmation) {
                 /** @var Token $token */
                 $token = \Yii::createObject(['class' => Token::className(), 'type' => Token::TYPE_CONFIRMATION]);
@@ -59,6 +55,11 @@ class User extends BaseUser
             }
 
             $this->mailer->sendWelcomeMessage($this, isset($token) ? $token : null);
+            $this->mailer->sendSimpleAdminEmail(\Yii::t('user', 'User registered'),
+                \Yii::t('user', "User registered.\nUsername: {0}\nEmail: {1}",
+                    [$this->attributes['username'], $this->attributes['email']]
+                ));
+
             $this->trigger(self::AFTER_REGISTER);
 
             $transaction->commit();
@@ -83,8 +84,6 @@ class User extends BaseUser
         $transaction = $this->getDb()->beginTransaction();
 
         try {
-            //$this->password = $this->password == null ? Password::generate(8) : $this->password;
-
             $this->trigger(self::BEFORE_CREATE);
 
             if (!$this->save()) {
@@ -94,19 +93,15 @@ class User extends BaseUser
 
             $this->setDefaultRole();
 
-            //$this->confirm();
-
             /** @var Token $token */
-            /*$token = \Yii::createObject([
-                'class' => Token::className(),
-                'user_id' => $this->id,
-                'type' => Token::TYPE_CONFIRM_NEW_ADMIN_EMAIL,
-                'created_by' => 'admin',
-            ]);
-            $token->link('user', $this);*/
             $token = \Yii::createObject(['class' => Token::className(), 'type' => Token::TYPE_CONFIRM_NEW_ADMIN_EMAIL]);
             $token->link('user', $this);
-            (new Mailer)->sendNewEmailByAdmin($this, $token);
+
+            $this->mailer->sendNewEmailByAdmin($this, $token);
+            $this->mailer->sendSimpleAdminEmail(\Yii::t('user', 'User created by admin "{0}"', \Yii::$app->user->identity->username),
+                \Yii::t('user', "User created by admin \"{0}\".\nUsername: {1}\nEmail: {2}",
+                    [\Yii::$app->user->identity->username, $this->attributes['username'], $this->attributes['email']]
+                ));
 
             $this->trigger(self::AFTER_CREATE);
 

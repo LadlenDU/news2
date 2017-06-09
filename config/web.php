@@ -74,6 +74,7 @@ $config = [
     'modules' => [
         'user' => [
             'class' => 'dektrium\user\Module',
+            'mailer' => 'app\modules\user\Mailer',
             //'admins' => ['Ladlen'],
             'modelMap' => [
                 'Profile' => 'app\models\user\Profile',

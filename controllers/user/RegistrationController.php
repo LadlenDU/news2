@@ -1,18 +1,8 @@
 <?php
 
-//namespace dektrium\user\controllers;
 namespace app\controllers\user;
 
-//use dektrium\user\Finder;
-//use dektrium\user\models\RegistrationForm;
-use dektrium\user\models\ResendForm;
-
-//use dektrium\user\models\User;
-//use dektrium\user\traits\AjaxValidationTrait;
-//use dektrium\user\traits\EventTrait;
 use yii\filters\AccessControl;
-//use yii\web\Controller;
-use yii\web\NotFoundHttpException;
 use app\models\user\Token;
 use app\models\user\RegistrationForm;
 
@@ -35,7 +25,7 @@ class RegistrationController extends BaseRegistrationController
     }
 
     /**
-     * Confirms user's account.
+     * Confirms user's account and allow to enter a password.
      * If confirmation was successful logs the user and shows success message and password field.
      * Otherwise shows error message.
      *
@@ -83,41 +73,9 @@ class RegistrationController extends BaseRegistrationController
 
         return $this->render('register_password', ['model' => $model,]);
 
-
-        //---------------------------
-
-
-        $user = $this->finder->findUserById($id);
-
-        if ($user === null || $this->module->enableConfirmation == false) {
-            throw new NotFoundHttpException();
-        }
-
-        if ($this->validateToken($code, Token::TYPE_CONFIRM_NEW_ADMIN_EMAIL)) {
-
-            $model = \Yii::createObject([
-                'class' => RegistrationForm::className(),
-                'scenario' => RegistrationForm::SCENARIO_SET_PASSWORD,
-            ]);
-            $this->performAjaxValidation($model);
-        }
-
-        $event = $this->getUserEvent($user);
-
-        $this->trigger(self::EVENT_BEFORE_CONFIRM, $event);
-
-        $confirmed = $user->attemptConfirmation($code);
-
-        $this->trigger(self::EVENT_AFTER_CONFIRM, $event);
-
-        return $this->render('register_password', [
-            'title' => \Yii::t('user', 'Account confirmation'),
-            'module' => $this->module,
-            'confirmed' => $confirmed,
-        ]);
     }
 
-    public function validateToken($code, $type)
+    /*public function validateToken($code, $type)
     {
         $success = false;
 
@@ -133,5 +91,5 @@ class RegistrationController extends BaseRegistrationController
         \Yii::$app->session->setFlash($success ? 'success' : 'danger', $message);
 
         return $success;
-    }
+    }*/
 }

@@ -185,5 +185,9 @@ return [
     'Your password has been set successfully.' => 'Пароль успешно установлен.',
     'Password has been set' => 'Пароль установлен',
     'An error occurred and your password has not been set. Please try again later.' => 'Произошла ошибка и ваш пароль не был установлен. Пожалуйста, попробуйте позже.',
+    'User registered' => 'Пользователь зарегистрировался',
+    "User registered.\nUsername: {0}\nEmail: {1}" => "Пользователь зарегистрировался.\nИмя: {0}\nEmail: {1}",
+    'User created by admin "{0}"' => 'Пользователь создан админом "{0}"',
+    "User created by admin \"{0}\".\nUsername: {1}\nEmail: {2}" => "Пользователь создан админом \"{0}\".\nИмя: {1}\nEmail: {2}",
 ];
 

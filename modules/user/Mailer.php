@@ -43,18 +43,25 @@ class Mailer extends BaseMailer
      */
     public function sendNewEmailByAdmin(User $user, Token $token)
     {
-        /*return $this->sendMessage(
-            $user->email,
-            $this->getNewEmailByAdminSubject(),
-            'new_email_by_admin',
-            //['user' => $user, 'token' => $token, 'module' => $this->module]
-            ['user' => $user, 'token' => $token]
-        );*/
         return $this->sendMessage(
             $user->email,
             $this->getNewEmailByAdminSubject(),
             'new_email_by_admin',
             ['user' => $user, 'token' => $token, 'module' => $this->module]
         );
+    }
+
+    public function sendSimpleAdminEmail($subject, $text)
+    {
+        if ($this->sender === null) {
+            $this->sender = Yii::$app->params['fromDistribEmail'];
+        }
+
+        return Yii::$app->mailer->compose()
+            ->setTo(Yii::$app->params['adminEmail'])
+            ->setFrom($this->sender)
+            ->setSubject($subject)
+            ->setTextBody($text)
+            ->send();
     }
 }
