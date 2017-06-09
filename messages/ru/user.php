@@ -181,5 +181,6 @@ return [
     'Become this user' => 'Стать этим пользователем',
     'Email created for you on {0}' => 'Email создан для вас на сайте {0}',
     'In order to complete your registration (verify and enter your password), please click the link below' => 'Чтобы активировать ваш аккаунт (верифицировать и ввести пароль), пожалуйста, нажмите на ссылку ниже',
+    'Set password' => 'Установка пароля',
 ];
 

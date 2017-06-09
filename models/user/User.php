@@ -4,6 +4,7 @@ namespace app\models\user;
 
 use app\models\user\Token;
 use app\modules\user\Mailer;
+use dektrium\user\helpers\Password;
 use dektrium\user\models\User as BaseUser;
 
 class User extends BaseUser
@@ -39,7 +40,7 @@ class User extends BaseUser
             }
 
             $auth = \Yii::$app->authManager;
-            $authorRole = $auth->getRole('author');
+            $authorRole = $auth->getRole('reader');
             $auth->assign($authorRole, $this->getId());
 
             if ($this->module->enableConfirmation) {
