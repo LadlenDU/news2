@@ -3,7 +3,7 @@
 namespace app\models\user;
 
 use dektrium\user\Module;
-use dektrium\user\models\Token;
+//use dektrium\user\models\Token;
 use Yii;
 use dektrium\user\models\SettingsForm as BaseSettingsForm;
 

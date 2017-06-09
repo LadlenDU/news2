@@ -182,5 +182,8 @@ return [
     'Email created for you on {0}' => 'Email создан для вас на сайте {0}',
     'In order to complete your registration (verify and enter your password), please click the link below' => 'Чтобы активировать ваш аккаунт (верифицировать и ввести пароль), пожалуйста, нажмите на ссылку ниже',
     'Set password' => 'Установка пароля',
+    'Your password has been set successfully.' => 'Пароль успешно установлен.',
+    'Password has been set' => 'Пароль установлен',
+    'An error occurred and your password has not been set. Please try again later.' => 'Произошла ошибка и ваш пароль не был установлен. Пожалуйста, попробуйте позже.',
 ];
 

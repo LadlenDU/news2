@@ -14,11 +14,13 @@ use yii\widgets\ActiveForm;
 
 /**
  * @var yii\web\View $this
- * @var yii\widgets\ActiveForm $form
- * @var dektrium\user\models\RecoveryForm $model
+ * @var dektrium\user\Module $module
+// * @var yii\widgets\ActiveForm $form
+// * @var dektrium\user\models\RecoveryForm $model
  */
 
-$this->title = Yii::t('user', 'Set password');
+//$this->title = Yii::t('user', 'Set password');
+$this->title = $title;
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="row">
