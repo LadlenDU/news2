@@ -51,15 +51,15 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?= $form->field($model, 'notify_news_email')->checkBox([], false);  ?>
                 <?= $form->field($model, 'notify_news_browser')->checkBox([], false);  ?>
 
-                <?= $form->field($model, 'name') ?><!--
+                <?= $form->field($model, 'name') ?>
 
-                <?/*= $form->field($model, 'public_email') */?>
+                <?= $form->field($model, 'public_email') ?>
 
-                <?/*= $form->field($model, 'website') */?>
+                <?= $form->field($model, 'website') ?>
 
                 <?= $form->field($model, 'location') ?>
 
-                <?/*= $form
+                <?= $form
                     ->field($model, 'timezone')
                     ->dropDownList(
                         ArrayHelper::map(
@@ -67,13 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
                             'timezone',
                             'name'
                         )
-                    ); */?>
+                    ); ?>
 
-                <?/*= $form
+                <?= $form
                     ->field($model, 'gravatar_email')
-                    ->hint(Html::a(Yii::t('user', 'Change your avatar at Gravatar.com'), 'http://gravatar.com')) */?>
+                    ->hint(Html::a(Yii::t('user', 'Change your avatar at Gravatar.com'), 'http://gravatar.com')) ?>
 
-                --><?/*= $form->field($model, 'bio')->textarea() */?>
+                <?= $form->field($model, 'bio')->textarea() ?>
 
                 <div class="form-group">
                     <div class="col-lg-offset-3 col-lg-9">
