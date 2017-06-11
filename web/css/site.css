@@ -113,3 +113,17 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.article_preview, .article_preview:hover, .article_preview:active {
+    color: #101010;
+}
+
+.article-item h4 {
+    display: inline;
+}
+
+.article-item {
+    margin-top: 15px;
+    border: solid black 1px;
+    padding: 5px;
+}
