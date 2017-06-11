@@ -1,5 +1,7 @@
 <?php
 
+use yii\web\UrlNormalizer;
+
 $params = require(__DIR__ . '/params.php');
 
 $config = [
@@ -63,6 +65,11 @@ $config = [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
+            'normalizer' => [
+                'class' => 'yii\web\UrlNormalizer',
+                // use temporary redirection instead of permanent for debugging
+                'action' => UrlNormalizer::ACTION_REDIRECT_TEMPORARY,
+            ],
             'rules' => [
                 '<alias:\w+>' => 'site/<alias>',
                 'user/confirm_input_password/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'user/registration/confirm_input_password',
