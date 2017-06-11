@@ -36,10 +36,11 @@ class NewsSearch extends News
      * Creates data provider instance with search query applied
      *
      * @param array $params
+     * @param int $pageSize
      *
      * @return ActiveDataProvider
      */
-    public function search($params)
+    public function search($params, $pageSize)
     {
         $query = News::find();
 
@@ -47,6 +48,9 @@ class NewsSearch extends News
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => $pageSize,
+            ],
         ]);
 
         $this->load($params);
