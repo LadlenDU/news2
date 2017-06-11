@@ -58,7 +58,7 @@ AppAsset::register($this);
             )*/
             ['label' => 'Профиль', 'url' => ['/user/settings/profile'], 'visible' => !Yii::$app->user->isGuest],
 
-            ['label' => 'Управление новостями', 'url' => ['/news/admin/index'], 'visible' => Yii::$app->user->can('handle_news')],
+            ['label' => 'Управление новостями', 'url' => ['/admin/news/index'], 'visible' => Yii::$app->user->can('handle_news')],
             ['label' => 'Управление пользователями', 'url' => ['/user/admin/index'], 'visible' => Yii::$app->user->can('admin')],
 
             ['label' => 'Регистрация', 'url' => ['/user/registration/register'], 'visible' => Yii::$app->user->isGuest],
