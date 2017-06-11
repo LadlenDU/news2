@@ -88,6 +88,7 @@ $config = [
                 'SettingsForm' => 'app\models\user\SettingsForm',
                 'User' => 'app\models\user\User',
                 'Token' => 'app\models\user\Token',
+                'LoginForm' => 'app\models\user\LoginForm',
             ],
             'controllerMap' => [
                 'registration' => 'app\controllers\user\RegistrationController',

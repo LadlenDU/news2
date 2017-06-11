@@ -189,5 +189,6 @@ return [
     "User registered.\nUsername: {0}\nEmail: {1}" => "Пользователь зарегистрировался.\nИмя: {0}\nEmail: {1}",
     'User created by admin "{0}"' => 'Пользователь создан админом "{0}"',
     "User created by admin \"{0}\".\nUsername: {1}\nEmail: {2}" => "Пользователь создан админом \"{0}\".\nИмя: {1}\nEmail: {2}",
+    'You have not set password yet' => 'Вы все ещё не установили пароль',
 ];
 
