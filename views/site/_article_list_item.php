@@ -14,14 +14,20 @@ $fPreview = \Yii::$app->formatter->asNtext($preview);
 
 ?>
 
-<article class="article-item"><h4><?= Html::a(Html::encode($model->title), Url::toRoute(['news/view', 'id' => $model->id])) ?></h4>
+<article class="article-item"><h4><?
+        if (\Yii::$app->user->isGuest) {
+            echo Html::encode($model->title);
+        } else {
+            echo Html::a(Html::encode($model->title), Url::toRoute(['site/view', 'id' => $model->id]));
+        }
+        ?></h4>
     <span style="font-size: smaller">(<?= \Yii::$app->formatter->asDatetime($model->updated_at) ?>)</span>
 
     <div class="item-body" style="margin-top: 5px">
-        <? if (\Yii::$app->user->isGuest){
+        <? if (\Yii::$app->user->isGuest) {
             echo $fPreview;
         } else {
-            echo Html::a($fPreview, Url::toRoute(['news/view', 'id' => $model->id]),
+            echo Html::a($fPreview, Url::toRoute(['site/view', 'id' => $model->id]),
                 ['title' => 'Нажмите чтобы увидеть полный текст', 'class' => 'article_preview']);
         }
         ?>

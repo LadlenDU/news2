@@ -71,6 +71,7 @@ $config = [
                 'action' => UrlNormalizer::ACTION_REDIRECT_TEMPORARY,
             ],
             'rules' => [
+                'news/view/<id:\d+>' => 'site/view',
                 '<alias:\w+>' => 'site/<alias>',
                 'user/confirm_input_password/<id:\d+>/<code:[A-Za-z0-9_-]+>' => 'user/registration/confirm_input_password',
             ],
