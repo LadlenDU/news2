@@ -7,9 +7,12 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use app\models\NewsSearch;
+use app\traits\news\NewsModelTrait;
 
 class SiteController extends Controller
 {
+    use NewsModelTrait;
+
     /**
      * @inheritdoc
      */
@@ -70,9 +73,16 @@ class SiteController extends Controller
         //return $this->render('index');
     }
 
-    public function actionView()
+    public function actionView($id)
     {
-        die('sds');
+
+        #$searchModel = new NewsSearch();
+
+        #return $this->render('/news/article');
+
+        return $this->render('/news/article', [
+            'model' => $this->findModel($id),
+        ]);
     }
 
     /**

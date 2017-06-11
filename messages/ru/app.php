@@ -11,5 +11,6 @@ return [
     'Create' => 'Создать',
     'Update Article: ' => 'Обновить статью: ',
     'Are you sure you want to delete this item?' => 'Вы уверены что хотите удалить этот элемент?',
+    'Posted:' => 'Залито:',
 ];
 

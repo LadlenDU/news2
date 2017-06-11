@@ -23,12 +23,7 @@ $this->title = 'Простейший новостной сайт';
             //'id' => 'list-wrapper',
             'style' => 'max-width: 600px; margin: 0 auto;',
         ],
-        'itemView' => '_article_list_item',
-        /*'itemOptions' => [
-            'tag' => 'div',
-            //'class' => 'element-wrapper',
-            //'style' => 'max-width: 600px;',
-        ],*/
+        'itemView' => '/news/_article_list_item',
     ]); ?>
 
     <?php Pjax::end(); ?>

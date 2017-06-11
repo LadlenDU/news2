@@ -128,3 +128,10 @@ a.desc:after {
     border: solid black 1px;
     padding: 5px;
 }
+
+.article {
+    max-width: 600px;
+    border: solid black 1px;
+    padding: 10px 10px 20px;
+    margin: 0 auto;
+}
