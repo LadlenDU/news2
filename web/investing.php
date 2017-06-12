@@ -1,8 +1,10 @@
 <?php
 
-define('ERR_LOG_FILE', dirname(__FILE__), 'investing_scraper_error.txt');
+error_reporting(E_ALL & ~E_WARNING);
+ini_set('display_errors', 1);
 
-$url = 'https://ru.investing.com/technical/%D0%A1%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D0%B9-%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7';
+define('ERR_LOG_FILE', dirname(__FILE__) . '/investing_scraper_error.txt');
+define('URL', 'https://ru.investing.com/technical/%D0%A1%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D0%B9-%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7');
 
 $ch = curl_init();
 
@@ -10,7 +12,7 @@ curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
 
-curl_setopt($ch, CURLOPT_URL, $url);
+curl_setopt($ch, CURLOPT_URL, URL);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_HEADER, 0);
 curl_setopt($ch, CURLOPT_NOBODY, 0);
@@ -24,16 +26,26 @@ curl_setopt($ch, CURLOPT_POST, 1);
 
 $out = curl_exec($ch);
 
-
 $doc = new DOMDocument();
-if (!$doc->loadHTMLFile($url))
-{
-    file_put_contents(ERR_LOG_FILE, "Не удалось загрузить документ $url\n", FILE_APPEND);
+if (!$doc->loadHTML($out)) {
+    errLog("Не удалось загрузить документ " . URL);
     exit;
 }
 $xpath = new DOMXpath($doc);
 //"//levelone[myfield[attributes/myatt='a]]]"
 //$cols = $xpath->query('//table/tr/td');
-$cols = $xpath->query("//table[@myatt='technicalSummaryTbl']");
+$rows = $xpath->query("//table[contains(@class, 'technicalSummaryTbl')]/tbody/tr");
 
+foreach ($rows as $row) {
+    if ($tr = $row->getElementsByTagName('td')) {
 
+    } else {
+        errLog('Не удалось получить getElementsByTagName("td")');
+    }
+
+}
+
+function errLog($text)
+{
+    file_put_contents(ERR_LOG_FILE, date(DATE_ATOM) . ": $text\n", FILE_APPEND);
+}
