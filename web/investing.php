@@ -7,6 +7,13 @@ define('ERR_LOG_FILE', dirname(__FILE__) . '/investing_scraper_error.txt');
 define('URL', 'https://ru.investing.com/technical/%D0%A1%D0%B2%D0%BE%D0%B4%D0%BD%D1%8B%D0%B9-%D0%A2%D0%B5%D1%85%D0%BD%D0%B8%D1%87%D0%B5%D1%81%D0%BA%D0%B8%D0%B9-%D0%90%D0%BD%D0%B0%D0%BB%D0%B8%D0%B7');
 define('TABLE_FILE', dirname(__FILE__) . '/gen_table.html');
 
+define('ACTIVE_SELL_TEXT', 'Активно продавать');
+define('ACTIVE_BUY_TEXT', 'Активно покупать');
+
+define('EXPIRE_RATIO', 3);
+$TIME_MAPPING = [5, 15, 30];
+
+
 $ch = curl_init();
 
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
@@ -46,7 +53,6 @@ if (!$rows = $xpath->query("//table[contains(@class, 'technicalSummaryTbl')]/tbo
 // Данные о таблице
 $table = [];
 
-//foreach ($rows as $row) {
 for ($r = 0; $r < $rows->length; ++$r) {
 
     $pos = $r % 3;
@@ -72,8 +78,8 @@ for ($r = 0; $r < $rows->length; ++$r) {
         } elseif ($pos == 2) {
             for ($c = 1; $c <= 3; ++$c) {
                 if ($td = $tr->item($c)) {
-                    if (strpos($td->textContent, 'Активно продавать') !== false
-                        || strpos($td->textContent, 'Активно покупать') !== false
+                    if (strpos($td->textContent, ACTIVE_SELL_TEXT) !== false
+                        || strpos($td->textContent, ACTIVE_BUY_TEXT) !== false
                     ) {
                         $column['data'][] = trim($td->textContent);
                     } else {
@@ -104,10 +110,13 @@ echo 'Investing script is over';
 function errLog($text)
 {
     file_put_contents(ERR_LOG_FILE, date(DATE_ATOM) . ": $text\n", FILE_APPEND);
+    echo "There were errors: $text\n";
 }
 
 function createTable($info)
 {
+    global $TIME_MAPPING;
+
     $t = "<table>\n";
 
     // Header
@@ -122,9 +131,21 @@ function createTable($info)
     $t .= "<tbody>\n";
     for ($i = 0; $i < 3; ++$i) {
         $t .= "<tr>\n";
+        $textExpire = 'экспирация: ' . ($TIME_MAPPING[$i] * EXPIRE_RATIO);
         foreach ($info as $el) {
-            $t .= '<td>' . ($el['data'][$i] ? $el['data'][$i] : '&nbsp;') . "</td>\n";
-
+            switch ($el['data'][$i])
+            {
+                case ACTIVE_SELL_TEXT:
+                    $cellText = "&#x25BC вниз<br>$textExpire";
+                    break;
+                case ACTIVE_BUY_TEXT:
+                    $cellText = "&#x25B2 вверх<br>$textExpire";
+                    break;
+                default:
+                    $cellText = '&nbsp;';
+                    break;
+            }
+            $t .= "<td>$cellText</td>\n";
         }
         $t .= "</tr>\n";
     }
