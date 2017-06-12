@@ -31,40 +31,59 @@ if (!$doc->loadHTML($out)) {
     errLog("Не удалось загрузить документ " . URL);
     exit;
 }
-$xpath = new DOMXpath($doc);
-//"//levelone[myfield[attributes/myatt='a]]]"
-//$cols = $xpath->query('//table/tr/td');
-$rows = $xpath->query("//table[contains(@class, 'technicalSummaryTbl')]/tbody/tr");
+
+if (!$xpath = new DOMXpath($doc)) {
+    errLog('Создание DOMXpath() не удалось');
+    exit;
+}
+
+if (!$rows = $xpath->query("//table[contains(@class, 'technicalSummaryTbl')]/tbody/tr")) {
+    errLog('xpath не верный !!!');
+    exit;
+}
 
 // Данные о таблице
 $table = [];
 
 //foreach ($rows as $row) {
 for ($r = 0; $r < $rows->length; ++$r) {
-    if ($tr = $row->getElementsByTagName('td')) {
+
+    $pos = $r % 3;
+    if ($pos == 0) {
         $column = ['head' => '', 'data' => []];
-        $pos = ($r + 1) % 3;
+    }
+
+    $row = $rows->item($r);
+    if ($tr = $row->getElementsByTagName('td')) {
+
         if ($pos == 0) {
             $td = $tr->item(0);
-            if ($a = $td->getElementsByTagName('a')) {
-                $aElem = $tr->item(0);
-                if (strpos($aElem->textContent, 'RUS') === false) {
-                    $column['head'] = $aElem->textContent;
-                } else {
-                    // Пропускаем пары с рублем
-                    continue;
-                }
+            if (strpos($td->textContent, 'RUB') === false) {
+                $column['head'] = $aElem->textContent;
             } else {
-                errLog('Не удалось получить getElementsByTagName("a") - название пары');
+                $r += 2;
+                continue;
             }
         } elseif ($pos == 2) {
             for ($c = 2; $c < 4; ++$c) {
+                if ($td = $tr->item($c)) {
+                    //$column['data'][] =
+                } else {
+                    errLog('Не удалось получить ячейку элемента ' . print_r($tr, true));
+                }
             }
         }
+
+        if ($pos == 2) {
+            $table[] = $column;
+        }
+
     } else {
-        errLog('Не удалось получить getElementsByTagName("td")');
+        errLog('Не удалось получить getElementsByTagName("td"). Элемент: ' . print_r($row, true));
     }
 }
+
+print_r($table);
 
 function errLog($text)
 {
