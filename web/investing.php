@@ -136,10 +136,10 @@ function createTable($info)
             switch ($el['data'][$i])
             {
                 case ACTIVE_SELL_TEXT:
-                    $cellText = "&#x25BC вниз<br>$textExpire";
+                    $cellText = "<span class='arrow down'>&#x25BC</span> вниз<br>$textExpire";
                     break;
                 case ACTIVE_BUY_TEXT:
-                    $cellText = "&#x25B2 вверх<br>$textExpire";
+                    $cellText = "<span class='arrow up'>&#x25B2</span> вверх<br>$textExpire";
                     break;
                 default:
                     $cellText = '&nbsp;';
