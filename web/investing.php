@@ -59,11 +59,15 @@ for ($r = 0; $r < $rows->length; ++$r) {
 
         if ($pos == 0) {
             $td = $tr->item(0);
-            if (strpos($td->textContent, 'RUB') === false) {
-                $column['head'] = $td->textContent;
+            if (($a = $td->getElementsByTagName('a')) && $a->length) {
+                if (strpos($a->item(0)->textContent, 'RUB') === false) {
+                    $column['head'] = $a->item(0)->textContent;
+                } else {
+                    $r += 2;
+                    continue;
+                }
             } else {
-                $r += 2;
-                continue;
+                errLog('Нет тега <a> для элемента <td>: ' . print_r($td, true));
             }
         } elseif ($pos == 2) {
             for ($c = 1; $c <= 3; ++$c) {
@@ -71,7 +75,7 @@ for ($r = 0; $r < $rows->length; ++$r) {
                     if (strpos($td->textContent, 'Активно продавать') !== false
                         || strpos($td->textContent, 'Активно покупать') !== false
                     ) {
-                        $column['data'][] = $td->textContent;
+                        $column['data'][] = trim($td->textContent);
                     } else {
                         $column['data'][] = '';
                     }
@@ -90,10 +94,12 @@ for ($r = 0; $r < $rows->length; ++$r) {
     }
 }
 
-print_r($table);
+//print_r($table);
 
 $html = createTable($table);
 file_put_contents(TABLE_FILE, $html);
+
+echo 'Investing script is over';
 
 function errLog($text)
 {
@@ -102,7 +108,6 @@ function errLog($text)
 
 function createTable($info)
 {
-
     $t = "<table>\n";
 
     // Header
