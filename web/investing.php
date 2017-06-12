@@ -66,7 +66,7 @@ for ($r = 0; $r < $rows->length; ++$r) {
                 continue;
             }
         } elseif ($pos == 2) {
-            for ($c = 2; $c <= 4; ++$c) {
+            for ($c = 1; $c <= 3; ++$c) {
                 if ($td = $tr->item($c)) {
                     if (strpos($td->textContent, 'Активно продавать') !== false
                         || strpos($td->textContent, 'Активно покупать') !== false
@@ -116,10 +116,12 @@ function createTable($info)
     // Body
     $t .= "<tbody>\n";
     for ($i = 0; $i < 3; ++$i) {
+        $t .= "<tr>\n";
         foreach ($info as $el) {
             $t .= '<td>' . ($el['data'][$i] ? $el['data'][$i] : '&nbsp;') . "</td>\n";
 
         }
+        $t .= "</tr>\n";
     }
     $t .= "</tbody>\n";
 

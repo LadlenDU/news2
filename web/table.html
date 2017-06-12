@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Investing</title>
+    <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+    <style>
+        #inv_table {
+            
+        }
+    </style>
+</head>
+<body>
+
+<div id="inv_table"></div>
+
+<script>
+    function loadTable() {
+        $.get("/gen_table.html", function (data) {
+            $("#inv_table").html(data);
+        })
+    }
+    loadTable();
+    setInterval(loadTable, 5000);
+</script>
+
+</body>
+</html>
