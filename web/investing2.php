@@ -55,7 +55,7 @@ $outJson = curl_exec($ch);
 
 $out = json_decode($outJson);
 //print_r($out->html);
-file_put_contents('tt_cookies_7.html', $out->html);
+#file_put_contents('tt_cookies_7.html', $out->html);
 //exit;
 
 $doc = new DOMDocument();
